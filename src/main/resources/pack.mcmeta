@@ -1,0 +1,7 @@
+{
+    "pack": {
+        "description": "sub_name resources",
+        "pack_format": 3,
+        "_comment": "All resources, including language files, should be lowercase."
+    }
+}

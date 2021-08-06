@@ -1,0 +1,12 @@
+sub_name.usage=/cn <Селектор> \n sub <Подпись> \n name <Имя> \n clear-s \n clear-n \n hide_name \n show_name \n hide_sub \n show_sub \n info
+sub_name.usage.move=/mn <селктор> <высота> <ширина>
+sub_name.argumentException.sender=Отправитель должен быть игроком
+sub_name.argumentException.invalid=Ошибка арумента комманды
+sub_name.argumentException.float=Ошибка дробного значения %s
+sub_name.info1=Информация: %s
+sub_name.info2=Имя: %s
+sub_name.info3=Подпись: %s
+sub_name.info4=Отоброжение Имени: %s
+sub_name.info5=Отоброжение подписи: %s
+sub_name.compile.name=Меня зовут &b&o&lВано
+sub_name.compile.sub=Моя подпись это &eРоссия

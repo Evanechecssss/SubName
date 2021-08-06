@@ -1,0 +1,12 @@
+sub_name.usage=/cn <entity selector> \n sub <sub name> \n name <name> \n clear-s \n clear-n \n hide_name \n show_name \n hide_sub \n show_sub \n info
+sub_name.usage.move=/mn <entity selector> <high> <shift>
+sub_name.argumentException.sender=Sender must be player
+sub_name.argumentException.invalid=Invalid argument
+sub_name.argumentException.float=Invalid float value %s
+sub_name.info1=Info: %s
+sub_name.info2=Name: %s
+sub_name.info3=Sub name: %s
+sub_name.info4=Show name: %s
+sub_name.info5=Show sub name: %s
+sub_name.compile.name=My name is &b&o&lVano
+sub_name.compile.sub=My sub name is &eRussian

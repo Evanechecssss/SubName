@@ -1,0 +1,18 @@
+[
+{
+  "modid": "sub_name",
+  "name": "Sub Name",
+  "description": "§lMod for add sub name to player (by order of §aTorayLife§r§l)",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "§lhttps://vk.com/evanechecs",
+  "updateUrl": "",
+  "authorList": [
+    "Evanechecssss"
+  ],
+  "credits": "§lThe §aForge§r§l and §aFML guys§r§l, for making §aForge§r§l && §eMcHorse",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
