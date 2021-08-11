@@ -98,10 +98,9 @@ public class SetNameCommand extends CommandBase {
             return getListOfStringsMatchingLastWord(args, collection);
         } else if (args.length == 3) {
 
-
-            if (clearNameList.contains(args[1])) {
+            if (clearNameList.contains(args[0])) {
                 return empty;
-            } else if (clearSubList.contains(args[1])) {
+            } else if (clearSubList.contains(args[0])) {
                 return empty;
             } else if (subList.contains(args[1])) {
                 return Lists.newArrayList(I18n.format("sub_name.compile.sub"));

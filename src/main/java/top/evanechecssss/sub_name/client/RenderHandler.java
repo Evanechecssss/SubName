@@ -1,18 +1,27 @@
 package top.evanechecssss.sub_name.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import top.evanechecssss.sub_name.ModInfo;
+import top.evanechecssss.sub_name.SubName;
 import top.evanechecssss.sub_name.capabilities.move.name.NameMove;
 import top.evanechecssss.sub_name.capabilities.move.sub.SubMove;
 import top.evanechecssss.sub_name.capabilities.names.Names;
+import top.evanechecssss.sub_name.network.ChatWasOpenNetwork;
+import top.evanechecssss.sub_name.network.ConfigurationMod;
 
 
 public class RenderHandler {
@@ -30,7 +39,7 @@ public class RenderHandler {
     @SideOnly(Side.CLIENT)
     public void onRenderLiving(RenderLivingEvent.Specials.Pre event) {
         Entity entity = event.getEntity();
-        if (Names.getShowName(entity)) {
+        if (Names.getShowName(entity) && !ConfigurationMod.doRenderC) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(NameMove.getHorizonFromEntity(entity), 0.7 + NameMove.getHighFromEntity(entity), 0);
         } else {
@@ -41,8 +50,18 @@ public class RenderHandler {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    public void playerOpenChat(GuiOpenEvent event){
+        if (event.getGui() instanceof GuiChat){
+            SubName.getWrapper().sendToServer(new ChatWasOpenNetwork.ChatWasOpenMessage(true));
+        }else {
+            SubName.getWrapper().sendToServer(new ChatWasOpenNetwork.ChatWasOpenMessage(false));
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void postRenderLiving(RenderLivingEvent.Specials.Post event) {
-        if (Names.getShowName(event.getEntity())) {
+        if (Names.getShowName(event.getEntity()) && !ConfigurationMod.doRenderC) {
             GlStateManager.popMatrix();
         }
     }
@@ -50,6 +69,13 @@ public class RenderHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void entityRender(RenderPlayerEvent.Pre event) {
+        if (ConfigurationMod.doRenderC && Names.getShowName(event.getEntity())){
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(event.getX() +NameMove.getHorizonFromEntity(event.getEntityPlayer()), event.getY() + 0.7  + NameMove.getHighFromEntity(event.getEntityPlayer()), event.getZ());
+            GlStateManager.scale(1, 1, 1);
+            event.getRenderer().renderEntityName((AbstractClientPlayer) event.getEntityPlayer(), 0, 0, 0, event.getEntityPlayer().getDisplayNameString(), 0);
+            GlStateManager.popMatrix();
+        }
         if (Names.getSubName(event.getEntityPlayer()).isEmpty() || !Names.getShowSub(event.getEntityPlayer())) return;
         GlStateManager.pushMatrix();
         GlStateManager.translate(event.getX() + SubMove.getHorizonFromEntity(event.getEntity()), event.getY() + SubMove.getHighFromEntity(event.getEntity()) + 0.3, event.getZ());

@@ -37,6 +37,6 @@ public class SubMoveHandler {
     public void tracker(PlayerEvent.StartTracking event) {
         EntityPlayer entityPlayer = event.getEntityPlayer();
         if (entityPlayer.world.isRemote) return;
-        event.getEntityPlayer().world.loadedEntityList.forEach(SubMove::synchronize);
+        SubMove.synchronize(event.getTarget());
     }
 }

@@ -37,6 +37,6 @@ public class NameMoveHandler {
     public void tracker(PlayerEvent.StartTracking event) {
         EntityPlayer entityPlayer = event.getEntityPlayer();
         if (entityPlayer.world.isRemote) return;
-        event.getEntityPlayer().world.loadedEntityList.forEach(NameMove::synchronize);
+        NameMove.synchronize(event.getTarget());
     }
 }

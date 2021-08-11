@@ -2,11 +2,16 @@ package top.evanechecssss.sub_name.common;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import top.evanechecssss.sub_name.ModInfo;
 import top.evanechecssss.sub_name.SubName;
 import top.evanechecssss.sub_name.capabilities.move.name.INameMove;
 import top.evanechecssss.sub_name.capabilities.move.name.NameMove;
@@ -21,6 +26,7 @@ import top.evanechecssss.sub_name.capabilities.names.Names;
 import top.evanechecssss.sub_name.capabilities.names.NamesHandler;
 import top.evanechecssss.sub_name.capabilities.names.NamesStorage;
 import top.evanechecssss.sub_name.client.RenderHandler;
+import top.evanechecssss.sub_name.network.ChatWasOpenNetwork;
 import top.evanechecssss.sub_name.network.NameMoveNetwork;
 import top.evanechecssss.sub_name.network.NamesNetwork;
 
@@ -32,6 +38,7 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new RenderHandler());
         MinecraftForge.EVENT_BUS.register(new NameMoveHandler());
         MinecraftForge.EVENT_BUS.register(new SubMoveHandler());
+        MinecraftForge.EVENT_BUS.register(this);
         CapabilityManager.INSTANCE.register(INames.class, new NamesStorage(), Names.class);
         CapabilityManager.INSTANCE.register(INameMove.class, new NameMoveStorage(), NameMove.class);
         CapabilityManager.INSTANCE.register(ISubMove.class, new SubMoveStorage(), SubMove.class);
@@ -40,7 +47,7 @@ public class CommonProxy {
         SubName.getWrapper().registerMessage(NamesNetwork.ChangeNameMessageHandler.class, NamesNetwork.ChangeNameMessage.class, 2, Side.CLIENT);
         SubName.getWrapper().registerMessage(NameMoveNetwork.NameMoveMessageHandler.class, NameMoveNetwork.NameMoveMessage.class, 3, Side.CLIENT);
         SubName.getWrapper().registerMessage(NameMoveNetwork.SubMoveMessageHandler.class, NameMoveNetwork.SubMoveMessage.class, 4, Side.CLIENT);
-
+        SubName.getWrapper().registerMessage(ChatWasOpenNetwork.ChatWasOpenHandler.class,ChatWasOpenNetwork.ChatWasOpenMessage.class,5,Side.SERVER);
     }
     public void init(FMLInitializationEvent event) {
     }
@@ -48,5 +55,14 @@ public class CommonProxy {
     public void server(FMLServerStartingEvent event) {
         event.registerServerCommand(new SetNameCommand());
         event.registerServerCommand(new MoveNamesCommand());
+    }
+
+    @SubscribeEvent
+    public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (event.getModID().equals(ModInfo.MODID))
+        {
+            ConfigManager.sync(ModInfo.MODID, Config.Type.INSTANCE);
+        }
     }
 }

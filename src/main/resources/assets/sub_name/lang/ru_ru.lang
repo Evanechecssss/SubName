@@ -10,3 +10,4 @@ sub_name.info4=Отоброжение Имени: %s
 sub_name.info5=Отоброжение подписи: %s
 sub_name.compile.name=Меня зовут &b&o&lВано
 sub_name.compile.sub=Моя подпись это &eРоссия
+sub_name.config.render=Настройки рендера

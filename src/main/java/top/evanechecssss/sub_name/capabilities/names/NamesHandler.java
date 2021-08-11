@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import top.evanechecssss.sub_name.ModInfo;
+import top.evanechecssss.sub_name.capabilities.move.name.NameMove;
 
 public class NamesHandler {
 
@@ -34,13 +35,11 @@ public class NamesHandler {
         if (entityPlayer.world.isRemote) return;
         Names.synchronize(entityPlayer);
     }
-
-    /*@SubscribeEvent
+    @SubscribeEvent
     public void tracker(PlayerEvent.StartTracking event) {
         EntityPlayer entityPlayer = event.getEntityPlayer();
         if (entityPlayer.world.isRemote) return;
-        event.getEntityPlayer().world.loadedEntityList.forEach(Names::synchronize);
-        event.getEntityPlayer().world.playerEntities.forEach(player -> Names.refreshName((EntityPlayerMP) player));
-
-    }*/
+        Names.synchronize(event.getTarget());
+        Names.refreshName((EntityPlayerMP) entityPlayer);
+    }
 }

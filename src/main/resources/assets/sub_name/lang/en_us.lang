@@ -10,3 +10,4 @@ sub_name.info4=Show name: %s
 sub_name.info5=Show sub name: %s
 sub_name.compile.name=My name is &b&o&lVano
 sub_name.compile.sub=My sub name is &eRussian
+sub_name.config.render=Render Conf
